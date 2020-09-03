@@ -35,7 +35,7 @@ code {
 
   font-size: 40px;
   color: #0086fe;
-  animation: ring 4s 0.7s ease-in-out infinite;
+  animation: ring 2s 10s ease-in-out infinite;
 }
 
 .related-card img {

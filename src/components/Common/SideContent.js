@@ -10,7 +10,6 @@ const SideContent = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       let res = await axios.get("/categories");
-      console.log(res.data.categories);
       setCategories(res.data.categories);
     };
 
@@ -21,7 +20,6 @@ const SideContent = () => {
           number: 10,
         },
       });
-      console.log(res.data.tags);
       setTags(res.data.tags);
     };
 
@@ -32,7 +30,7 @@ const SideContent = () => {
   let renderCategories = categories.map((item) => (
     <ListItem key={item.ID}>
       <ListItemText>
-        <Link to="/">{"#" + item.slug}</Link>
+        <Link to={`/categories/${item.slug}`}>{item.slug}</Link>
       </ListItemText>
     </ListItem>
   ));
@@ -40,7 +38,7 @@ const SideContent = () => {
   let renderTags = tags.map((item) => (
     <ListItem key={item.ID}>
       <ListItemText>
-        <Link to="/home">{"#" + item.slug}</Link>
+        <Link to={`/tags/${item.slug}`}>{"#" + item.slug}</Link>
       </ListItemText>
     </ListItem>
   ));

@@ -12,6 +12,9 @@ const App = () => {
       <div className="main-grid container">
         <div className="">
           <Route path="/" exact component={BlogList}></Route>
+          <Route path="/tags/:tagid" exact component={BlogList}></Route>
+          <Route path="/categories/:catid" exact component={BlogList}></Route>
+
           <Route path="/post/:id" component={Post}></Route>
         </div>
         <SideContent />

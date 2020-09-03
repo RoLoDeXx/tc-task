@@ -5,7 +5,6 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import parse from "html-react-parser";
 import { Link } from "react-router-dom";
@@ -20,14 +19,14 @@ const useStyles = makeStyles({
   },
 });
 
-const Post = ({ title, thumbnail, date, content, tags, id }) => {
+const Post = ({ title, thumbnail, date, content, categories, id }) => {
   if (content.length > 300) content = content.slice(0, 300) + "...";
 
   const classes = useStyles();
 
-  let renderTags = Object.keys(tags).map((tag) => (
-    <button className="bg-transparent border-0 mx-2" key={tag}>
-      #{tag}
+  let renderCategories = Object.keys(categories).map((cat) => (
+    <button className="bg-transparent border-0 mx-2" key={cat}>
+      {cat}
     </button>
   ));
 
@@ -54,7 +53,7 @@ const Post = ({ title, thumbnail, date, content, tags, id }) => {
             </Link>
             <p className="ml-2 text-muted">{moment(date).fromNow()}</p>
           </div>
-          <div className="d-block">{renderTags}</div>
+          <div className="d-block">{renderCategories}</div>
         </CardActions>
       </Card>
     </React.Fragment>
