@@ -10,8 +10,10 @@ const BlogList = (props) => {
   if (props.match.params.catid) cid = props.match.params.catid;
 
   const [found, setFound] = useState(null);
+  const [loading, setLoadind] = useState(true);
   const [posts, setposts] = useState([]);
-  const [next, setNext] = useState(null);
+  const [next, setNext] = useState(0);
+
   useEffect(() => {
     const fetchPosts = async () => {
       let res = await axios.get("/posts", {
@@ -26,12 +28,13 @@ const BlogList = (props) => {
       setposts(res.data.posts);
       setFound(res.data.found);
       setNext(res.data.meta.next_page);
+      setLoadind(false);
     };
     fetchPosts();
   }, [cid, tid]);
 
   const loadMore = async () => {
-    setNext(null);
+    setLoadind(true);
     let res = await axios.get("/posts", {
       params: {
         number: 25,
@@ -43,8 +46,9 @@ const BlogList = (props) => {
     });
     setFound(res.data.found);
     setposts([...posts, ...res.data.posts]);
-    if (next === res.data.meta.next_page) setNext(res.data.meta.next_page);
-    else setNext(null);
+    setLoadind(false);
+    if (next === res.data.meta.next_page) setNext(null);
+    else setNext(res.data.meta.next_page);
   };
 
   let renderPosts = posts.map((post) =>
@@ -71,40 +75,41 @@ const BlogList = (props) => {
     )
   );
 
-  if (found === 0)
-    return (
-      <Typography variant="h5" color="initial" className="mt-5">
-        That's about it
-      </Typography>
-    );
-  else
-    return (
-      <div>
-        {renderPosts}
+  return (
+    <div>
+      {renderPosts}
 
-        {next !== null ? (
-          <Button
-            className="d-block mx-auto my-5"
-            variant="outlined"
-            color="primary"
-            onClick={loadMore}
-          >
-            Load More
-          </Button>
-        ) : (
-          <div className="mt-5">
-            <Skeleton variant="rect" height={400} />
-            <Skeleton variant="text" width={170} height={50} />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-            <Skeleton variant="text" />
-          </div>
-        )}
-      </div>
-    );
+      {loading !== true && next !== null && (
+        <Button
+          className="d-block mx-auto my-5"
+          variant="outlined"
+          color="primary"
+          onClick={loadMore}
+        >
+          Load More
+        </Button>
+      )}
+
+      {loading && (
+        <div className="mt-5">
+          <Skeleton variant="rect" height={400} />
+          <Skeleton variant="text" width={170} height={50} />
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+          <Skeleton variant="text" />
+        </div>
+      )}
+
+      {found === 0 && (
+        <Typography variant="h5" color="initial" className="mt-5">
+          That's about it
+        </Typography>
+      )}
+    </div>
+  );
 };
 
 export default BlogList;
