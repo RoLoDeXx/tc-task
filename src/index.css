@@ -20,6 +20,7 @@ code {
 
 .complete-post img {
   width: 100%;
+  object-fit: cover;
 }
 
 .complete-post blockquote {
@@ -113,5 +114,11 @@ code {
 @media only screen and (max-width: 992px) {
   .main-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .complete-post {
+    max-width: 90vw;
   }
 }
