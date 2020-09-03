@@ -62,10 +62,13 @@ const Post = (props) => {
           <Typography gutterBottom variant="h4" component="h2">
             {post.title}
           </Typography>
-          <span className="d-flex align-items-center">
-            <p className="text-muted">{moment(post.date).fromNow()}</p>
-            <p className="text-muted ml-4">{post.author.name}</p>
-          </span>
+          <p className="text-muted">
+            <i class="far fa-edit mr-1"></i>
+            {post.author.name}
+          </p>
+          <p className="text-muted">
+            <i class="far fa-clock"></i> {moment(post.date).fromNow()}
+          </p>
 
           {/* <Typography variant="body2" color="textSecondary" component="p"> */}
           <div>{parse(post.content)}</div>

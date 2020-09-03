@@ -64,7 +64,7 @@ const BlogList = (props) => {
       {found !== null ? (
         next !== null ? (
           <Typography variant="h5" color="initial" className="mt-5">
-            Even truecaller doesn't list this :(
+            That's about it
           </Typography>
         ) : (
           <Button

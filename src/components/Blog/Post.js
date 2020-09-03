@@ -51,7 +51,10 @@ const Post = ({ title, thumbnail, date, content, categories, id }) => {
             <Link to={`/post/${id}`} className="btn btn-primary text-white">
               View
             </Link>
-            <p className="ml-2 text-muted">{moment(date).fromNow()}</p>
+            <p className="ml-2 text-muted">
+              <i class="far fa-clock"></i>
+              {moment(date).fromNow()}
+            </p>
           </div>
           <div className="d-block">{renderCategories}</div>
         </CardActions>
