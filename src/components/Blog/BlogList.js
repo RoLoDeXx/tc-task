@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../APIs/truecaller";
 import Post from "./Post";
 import { Button, Typography } from "@material-ui/core";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import Skeleton from "@material-ui/lab/Skeleton";
 const BlogList = (props) => {
   let cid = null,
     tid = null;
@@ -43,30 +43,46 @@ const BlogList = (props) => {
     });
     setFound(res.data.found);
     setposts([...posts, ...res.data.posts]);
-    setNext(res.data.meta.next_page);
+    if (next === res.data.meta.next_page) setNext(res.data.meta.next_page);
+    else setNext(null);
   };
 
-  let renderPosts = posts.map((post) => (
-    <Post
-      title={post.title}
-      thumbnail={post.post_thumbnail.URL}
-      date={post.date}
-      content={post.excerpt}
-      categories={post.categories}
-      key={post.ID}
-      id={post.ID}
-    ></Post>
-  ));
+  let renderPosts = posts.map((post) =>
+    post.post_thumbnail ? (
+      <Post
+        title={post.title}
+        thumbnail={post.post_thumbnail.URL}
+        date={post.date}
+        content={post.excerpt}
+        categories={post.categories}
+        key={post.ID}
+        id={post.ID}
+      ></Post>
+    ) : (
+      <Post
+        title={post.title}
+        // thumbnail={post.post_thumbnail.URL}
+        date={post.date}
+        content={post.excerpt}
+        categories={post.categories}
+        key={post.ID}
+        id={post.ID}
+      ></Post>
+    )
+  );
 
-  return (
-    <div>
-      {renderPosts}
-      {found !== null ? (
-        next !== null ? (
-          <Typography variant="h5" color="initial" className="mt-5">
-            That's about it
-          </Typography>
-        ) : (
+  if (found === 0)
+    return (
+      <Typography variant="h5" color="initial" className="mt-5">
+        That's about it
+      </Typography>
+    );
+  else
+    return (
+      <div>
+        {renderPosts}
+
+        {next !== null ? (
           <Button
             className="d-block mx-auto my-5"
             variant="outlined"
@@ -75,12 +91,20 @@ const BlogList = (props) => {
           >
             Load More
           </Button>
-        )
-      ) : (
-        <CircularProgress className="d-block mx-auto my-5" />
-      )}
-    </div>
-  );
+        ) : (
+          <div className="mt-5">
+            <Skeleton variant="rect" height={400} />
+            <Skeleton variant="text" width={170} height={50} />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+            <Skeleton variant="text" />
+          </div>
+        )}
+      </div>
+    );
 };
 
 export default BlogList;
