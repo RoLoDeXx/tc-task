@@ -26,7 +26,9 @@ const Post = ({ title, thumbnail, date, content, tags, id }) => {
   const classes = useStyles();
 
   let renderTags = Object.keys(tags).map((tag) => (
-    <button className="bg-transparent border-0 mx-2">#{tag}</button>
+    <button className="bg-transparent border-0 mx-2" key={tag}>
+      #{tag}
+    </button>
   ));
 
   return (
@@ -47,10 +49,10 @@ const Post = ({ title, thumbnail, date, content, tags, id }) => {
         </CardContent>
         <CardActions className="d-flex align-items-baseline justify-content-between">
           <div className="d-flex align-items-baseline ">
-            <Button size="small" color="primary">
-              <Link to={`/post/${id}`}>View</Link>
-            </Button>
-            <p className="text-muted">{moment(date).fromNow()}</p>
+            <Link to={`/post/${id}`} className="btn btn-primary text-white">
+              View
+            </Link>
+            <p className="ml-2 text-muted">{moment(date).fromNow()}</p>
           </div>
           <div className="d-block">{renderTags}</div>
         </CardActions>

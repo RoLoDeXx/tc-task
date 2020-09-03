@@ -32,6 +32,7 @@ const Post = (props) => {
   useEffect(() => {
     const fetchPost = async () => {
       let res = await axios.get(`posts/${id}`);
+      console.log(res.data);
       setPost(res.data);
     };
 

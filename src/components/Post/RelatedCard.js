@@ -8,7 +8,6 @@ const RelatedCard = ({ id }) => {
     const fetchPost = async () => {
       let res = await axios.get(`posts/${id}`);
       setcontent(res.data);
-      console.log(res.data);
     };
     fetchPost();
   }, [id]);
