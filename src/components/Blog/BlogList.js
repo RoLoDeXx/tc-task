@@ -40,6 +40,9 @@ const BlogList = () => {
       thumbnail={post.post_thumbnail.URL}
       date={post.date}
       content={post.content}
+      tags={post.categories}
+      key={post.ID}
+      id={post.ID}
     ></Post>
   ));
 

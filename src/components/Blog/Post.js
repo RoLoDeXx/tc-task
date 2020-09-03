@@ -8,6 +8,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import parse from "html-react-parser";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -19,10 +20,14 @@ const useStyles = makeStyles({
   },
 });
 
-const Post = ({ title, thumbnail, date, content, loadMore }) => {
+const Post = ({ title, thumbnail, date, content, tags, id }) => {
   if (content.length > 300) content = content.slice(0, 300) + "...";
 
   const classes = useStyles();
+
+  let renderTags = Object.keys(tags).map((tag) => (
+    <button className="bg-transparent border-0 mx-2">#{tag}</button>
+  ));
 
   return (
     <React.Fragment>
@@ -41,10 +46,13 @@ const Post = ({ title, thumbnail, date, content, loadMore }) => {
           {/* </Typography> */}
         </CardContent>
         <CardActions className="d-flex align-items-baseline justify-content-between">
-          <Button size="small" color="primary">
-            View
-          </Button>
-          <p className="text-muted">{moment(date).fromNow()}</p>
+          <div className="d-flex align-items-baseline ">
+            <Button size="small" color="primary">
+              <Link to={`/post/${id}`}>View</Link>
+            </Button>
+            <p className="text-muted">{moment(date).fromNow()}</p>
+          </div>
+          <div className="d-block">{renderTags}</div>
         </CardActions>
       </Card>
     </React.Fragment>
