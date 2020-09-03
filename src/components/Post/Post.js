@@ -9,6 +9,8 @@ import Typography from "@material-ui/core/Typography";
 import parse from "html-react-parser";
 import axios from "../APIs/truecaller";
 import local from "../APIs/localBackend";
+import RelatedCard from "./RelatedCard";
+import { Divider } from "@material-ui/core";
 
 const Post = (props) => {
   const useStyles = makeStyles({
@@ -35,14 +37,18 @@ const Post = (props) => {
 
     const fetchRelated = async () => {
       let res = await local.post(`posts/${id}`);
-      // console.log(res.data.hits);
       setRelated(res.data.hits.slice(0, 3));
     };
     fetchPost();
     fetchRelated();
   }, [id]);
 
-  const renderRelated = related.map(() => <p>1</p>);
+  const renderRelated = related.map((item) => (
+    <RelatedCard
+      key={item.fields.post_id}
+      id={item.fields.post_id}
+    ></RelatedCard>
+  ));
 
   return post ? (
     <div className="complete-post">
@@ -72,7 +78,13 @@ const Post = (props) => {
         </CardActions>
       </Card>
 
-      <div className="mt-5">{renderRelated}</div>
+      <Divider></Divider>
+
+      <Typography variant="h5" color="initial" className="mt-5">
+        Based on your preferences
+      </Typography>
+
+      <div className="mt-3">{renderRelated}</div>
     </div>
   ) : null;
 };

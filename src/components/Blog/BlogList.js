@@ -29,7 +29,6 @@ const BlogList = () => {
         page_handle: next,
       },
     });
-    console.log(res);
     setposts([...posts, ...res.data.posts]);
     setNext(res.data.meta.next_page);
   };
