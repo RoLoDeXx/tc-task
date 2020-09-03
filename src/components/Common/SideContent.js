@@ -1,23 +1,54 @@
 import React, { useState, useEffect } from "react";
 import Typography from "@material-ui/core/Typography";
 import axios from "../APIs/truecaller";
-
+import { ListItem, List, ListItemText, Divider } from "@material-ui/core";
+import { Link } from "react-router-dom";
 const SideContent = () => {
-  const [state, setstate] = useState(null);
+  const [categories, setCategories] = useState([]);
+  const [tags, setTags] = useState([]);
+
   useEffect(() => {
     const fetchCategories = async () => {
-      let res = await axios.get("/categories", {
-        params: { order_by: "count" },
-      });
-      console.log(res);
+      let res = await axios.get("/categories");
+      console.log(res.data.categories);
+      setCategories(res.data.categories);
     };
+
+    const fetchTags = async () => {
+      let res = await axios.get("/tags", {
+        params: {
+          order_by: "count",
+          number: 10,
+        },
+      });
+      console.log(res.data.tags);
+      setTags(res.data.tags);
+    };
+
     fetchCategories();
+    fetchTags();
   }, []);
+
+  let renderCategories = categories.map((item) => (
+    <ListItem key={item.ID}>
+      <ListItemText>
+        <Link to="/">{"#" + item.slug}</Link>
+      </ListItemText>
+    </ListItem>
+  ));
+
+  let renderTags = tags.map((item) => (
+    <ListItem key={item.ID}>
+      <ListItemText>
+        <Link to="/home">{"#" + item.slug}</Link>
+      </ListItemText>
+    </ListItem>
+  ));
 
   return (
     <div className="mt-5 d-none d-md-block">
-      <img className="spam-img" src={require("../../spam.jpg")} />
-      <div className="d-flex align-items-center mt-3">
+      <img className="w-100" src={require("../../spam.jpg")} alt="tc-img" />
+      <div className="d-flex align-items-center mt-3 justify-content-between">
         <a href="https://play.google.com/store/apps/details?id=com.truecaller&referrer=utm_source%3Dblogbanner&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1">
           <img
             className="play-link"
@@ -28,7 +59,28 @@ const SideContent = () => {
         <span className="phone fa fa-phone"></span>
       </div>
 
-      <p>Categories</p>
+      <Divider />
+      <Typography variant="h5" color="initial" className="mt-4">
+        Categories{" "}
+        <span role="img" aria-label="fire">
+          🌀
+        </span>
+      </Typography>
+
+      <List component="nav" aria-label="Categories">
+        {renderCategories}
+      </List>
+      <Divider />
+      <Typography variant="h5" color="initial" className="mt-4">
+        Trending Tags{" "}
+        <span role="img" aria-label="fire">
+          🔥
+        </span>
+      </Typography>
+
+      <List component="nav" aria-label="Categories">
+        {renderTags}
+      </List>
     </div>
   );
 };
