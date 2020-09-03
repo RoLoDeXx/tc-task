@@ -39,7 +39,7 @@ const BlogList = () => {
       title={post.title}
       thumbnail={post.post_thumbnail.URL}
       date={post.date}
-      content={post.content}
+      content={post.excerpt}
       tags={post.categories}
       key={post.ID}
       id={post.ID}

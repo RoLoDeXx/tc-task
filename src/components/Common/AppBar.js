@@ -5,7 +5,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-
+import { Link } from "react-router-dom";
 const useStyles = makeStyles(() => ({
   root: {
     flexGrow: 1,
@@ -17,7 +17,6 @@ const useStyles = makeStyles(() => ({
 
   title: {
     flexGrow: 1,
-    color: "transparent",
     background:
       "url(https://truecaller.blog/wp-content/uploads/2017/04/truecaller-logo-white-e21aa38-e1491987638993.png)",
     backgroundSize: "140px auto",
@@ -26,6 +25,13 @@ const useStyles = makeStyles(() => ({
     display: "block",
     width: "140px",
     height: "35px",
+  },
+
+  txtTransparent: {
+    color: "transparent",
+    "&:hover": {
+      color: "transparent",
+    },
   },
 }));
 
@@ -37,7 +43,9 @@ export default function MenuBar() {
       <AppBar position="static" className={classes.bar}>
         <Toolbar>
           <Typography variant="h6" className={classes.title}>
-            News
+            <Link to="/" className={classes.txtTransparent}>
+              truecaller home
+            </Link>
           </Typography>
           <IconButton
             edge="start"
